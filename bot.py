@@ -1,20 +1,40 @@
-import discord
-from discord.ext import commands
-import random
-from random import choice
-from itertools import cycle
+# import discord
+# from discord.ext import commands
+# import random
+# from random import choice
+# from itertools import cycle
+# import os
+# import json
+# import random
+# import datetime
+# import requests
+# import aiosqlite
+# import asyncio
+# from typing import Text
+# from discord.ext import tasks
+# from discord.ext.commands import clean_content
+# import aiohttp
+# import platform
+# delete this if you want, I'm leaving these here incase I've left anything out
+
 import os
 import json
 import random
+from random import choice
 import datetime
-import requests
-import aiosqlite
 import asyncio
-from typing import Text
-from discord.ext import tasks
-from discord.ext.commands import clean_content
-import aiohttp
 import platform
+from itertools import cycle
+from typing import Text
+
+import aiosqlite
+import aiohttp
+import requests
+import discord
+from discord.ext import commands, tasks
+from discord.ext.commands import clean_content
+
+
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="+",intents=intents)
 bot.version = "1.0"
