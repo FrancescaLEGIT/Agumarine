@@ -15,6 +15,7 @@ from discord.ext import tasks
 from discord.ext.commands import clean_content
 import aiohttp
 import platform
+from aiohttp import ClientSession
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="+",intents=intents)
 bot.version = "1.0"
@@ -128,7 +129,7 @@ async def przydatne(ctx):
 
 async def zabawa(ctx):
     embed= discord.Embed(title="zabawa", description="lista For Fun komend")
-    embed.add_field(name="Komendy", value="pies, rickroll")
+    embed.add_field(name="Komendy", value="pies, rickroll, rzutmonetą, meme")
     await ctx.send(embed=embed) 
 @pomoc.command()
 
@@ -310,4 +311,24 @@ async def instagram(ctx:commands.Context):
 async def avatar(ctx, *,  avamember : discord.Member=None):
     userAvatarUrl = avamember.avatar_url
     await ctx.send(userAvatarUrl)
-bot.run("") 
+determine_flip = [1, 0]
+
+@bot.command()
+async def rzutmonetą(ctx):
+    if random.choice(determine_flip) == 1:
+        embed = discord.Embed(title="rzutmonetą | (Agumarine)", description=f"{ctx.author.mention} Rzuciłeś monetą, wypadło **orzeł**!")
+        await ctx.send(embed=embed)
+
+    else:
+        embed = discord.Embed(title="rzutmonetą | (Agumarine)", description=f"{ctx.author.mention} Rzuciłeś monetą, wypadło **reszka**!")
+        await ctx.send(embed=embed)
+@bot.command(pass_context=True)
+async def meme(ctx):
+    embed = discord.Embed(title="", description="")
+
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get('https://www.reddit.com/r/dankmemes/new.json?sort=hot') as r:
+            res = await r.json()
+            embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
+            await ctx.send(embed=embed) 
+bot.run("")   
