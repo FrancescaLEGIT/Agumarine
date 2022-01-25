@@ -310,4 +310,22 @@ async def instagram(ctx:commands.Context):
 async def avatar(ctx, *,  avamember : discord.Member=None):
     userAvatarUrl = avamember.avatar_url
     await ctx.send(userAvatarUrl)
-bot.run("") 
+@bot.command()
+async def rzutmonetą(ctx):
+    if random.choice(determine_flip) == 1:
+        embed = discord.Embed(title="rzutmonetą | (Agumarine)", description=f"{ctx.author.mention} Rzuciłeś monetą, wypadło **orzeł**!")
+        await ctx.send(embed=embed)
+
+    else:
+        embed = discord.Embed(title="rzutmonetą | (Agumarine)", description=f"{ctx.author.mention} Rzuciłeś monetą, wypadło **reszka**!")
+        await ctx.send(embed=embed)
+@bot.command(pass_context=True)
+async def meme(ctx):
+    embed = discord.Embed(title="", description="")
+
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get('https://www.reddit.com/r/dankmemes/new.json?sort=hot') as r:
+            res = await r.json()
+            embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
+            await ctx.send(embed=embed)                                                                                                                                             
+bot.run("")
