@@ -15,6 +15,8 @@ from discord.ext import tasks
 from discord.ext.commands import clean_content
 import aiohttp
 import platform
+from aiohttp import ClientSession
+import time
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="+",intents=intents)
 bot.version = "1.0"
@@ -128,7 +130,7 @@ async def przydatne(ctx):
 
 async def zabawa(ctx):
     embed= discord.Embed(title="zabawa", description="lista For Fun komend")
-    embed.add_field(name="Komendy", value="pies, rickroll")
+    embed.add_field(name="Komendy", value="pies, rickroll, rzutmonetą, meme")
     await ctx.send(embed=embed) 
 @pomoc.command()
 
@@ -310,6 +312,8 @@ async def instagram(ctx:commands.Context):
 async def avatar(ctx, *,  avamember : discord.Member=None):
     userAvatarUrl = avamember.avatar_url
     await ctx.send(userAvatarUrl)
+determine_flip = [1, 0]
+
 @bot.command()
 async def rzutmonetą(ctx):
     if random.choice(determine_flip) == 1:
@@ -327,5 +331,37 @@ async def meme(ctx):
         async with cs.get('https://www.reddit.com/r/dankmemes/new.json?sort=hot') as r:
             res = await r.json()
             embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
-            await ctx.send(embed=embed)                                                                                                                                             
-bot.run("")
+            await ctx.send(embed=embed) 
+@bot.command()
+async def remind(ctx, time, *, task):
+    def convert(time):
+        pos = ['s', 'm', 'h', 'd']
+
+        time_dict = {"s": 1, "m": 60, "h": 3600, "d": 3600 * 24}
+
+        unit = time[-1]
+
+        if unit not in pos:
+            return -1
+        try:
+            val = int(time[:-1])
+        except:
+            return -2
+
+        return val * time_dict[unit]
+    converted_time = convert(time)
+    if converted_time == -1:
+        await ctx.send('You didn't answer the time properly')
+        return
+    if converted_time == -2:
+        await ctx.send('Time must be an integer and btw i hate maths')
+        return
+
+    await ctx.send(f'I have set a reminder for {task}, and will explode in {time}')
+
+    await asyncio.sleep(converted_time)
+    await ctx.author.send(f'You have set a reminder for {task}, OVER AND OUT! 3 ')
+    await ctx.author.send(f'You have set a reminder for {task}, OVER AND OUT! 2 ')
+    await ctx.author.send(f'You have set a reminder for {task}, OVER AND OUT! 1 ')
+    await ctx.author.send(f'Reminder for {task} is over.') 
+bot.run("")                          
