@@ -46,7 +46,7 @@ async def clear(ctx, n=0):
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
-    await ctx.send(f'''"{member}" **został zbanowy** "{ctx.author}" **powód bana** "{reason}"''')   
+    await ctx.send(f'''"{member}" **został zbanowy!** **przez** "{ctx.author}" **powód bana** "{reason}"''')   
 
 @bot.command()
 @commands.has_permissions(kick_members=True)
@@ -124,7 +124,7 @@ async def ważne(ctx):
 
 async def przydatne(ctx):
     embed= discord.Embed(title="Przydatne", description="lista Przydatnch komend")
-    embed.add_field(name="Komendy", value="say, ping, svinfo, losuj, usinfo, avatar")
+    embed.add_field(name="Komendy", value="say, ping, svinfo, losuj, usinfo, avatar, przypomnienie")
     await ctx.send(embed=embed)    
 @pomoc.command()
 
@@ -141,7 +141,7 @@ async def leveling(ctx):
 @pomoc.command()
 
 async def svstats(ctx):
-    embed= discord.Embed(title="leveling", description="lista svstats komend")
+    embed= discord.Embed(title="Svtats", description="lista svstats komend")
     embed.add_field(name="Komendy", value="statyinfo numberOfChannel, statyinfo memberCount, statyinfo name, statyinfo rolesCount")
     await ctx.send(embed=embed)    
 
@@ -333,7 +333,7 @@ async def meme(ctx):
             embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
             await ctx.send(embed=embed) 
 @bot.command()
-async def remind(ctx, time, *, task):
+async def przypomnienie(ctx, time, *, task):
     def convert(time):
         pos = ['s', 'm', 'h', 'd']
 
@@ -351,17 +351,17 @@ async def remind(ctx, time, *, task):
         return val * time_dict[unit]
     converted_time = convert(time)
     if converted_time == -1:
-        await ctx.send('You didn't answer the time properly')
+        await ctx.send('Nie odpowiedziałeś poprawnie na godzinę')
         return
     if converted_time == -2:
-        await ctx.send('Time must be an integer and btw i hate maths')
+        await ctx.send('Czas musi być liczbą całkowitą, a przy okazji nienawidzę matematyki')
         return
 
-    await ctx.send(f'I have set a reminder for {task}, and will explode in {time}')
+    await ctx.send(f'Ustawiłem przypomnienie dla {task}, i wybuchnie w {time}')
 
     await asyncio.sleep(converted_time)
-    await ctx.author.send(f'You have set a reminder for {task}, OVER AND OUT! 3 ')
-    await ctx.author.send(f'You have set a reminder for {task}, OVER AND OUT! 2 ')
-    await ctx.author.send(f'You have set a reminder for {task}, OVER AND OUT! 1 ')
-    await ctx.author.send(f'Reminder for {task} is over.') 
-bot.run("")                          
+    await ctx.author.send(f'Ustawiłeś przypomnienie dla {task}, OVER AND OUT! 3 ')
+    await ctx.author.send(f'Ustawiłeś przypomnienie dla {task}, OVER AND OUT! 2 ')
+    await ctx.author.send(f'Ustawiłeś przypomnienie dla {task}, OVER AND OUT! 1 ')
+    await ctx.author.send(f'Przypomnienie dla {task} to koniec.') 
+bot.run("NjQ0MTkzNzI5NDU2MTExNjM2.XcweKQ.QfOdAWa0VpSfsJKkxh6lV_SGaeo")         
